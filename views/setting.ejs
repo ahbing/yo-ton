@@ -1,0 +1,45 @@
+<% if(user._id == person._id){%>
+<%- include header%>
+<article class="setting-page clearfix">
+	<aside class="setting-nav">
+		<h3>信息设置</h3>
+		<ul>
+			<li><a href="?editinfo=true">修改信息</a></li>
+			<li><a href="?editpsw=true">修改密码</a></li>
+			<li><a class='on' href="?editheader=true">修改头像</a></li>
+		</ul>
+	</aside>
+	<% if(toRender.info){%>
+
+ 		<%- include settinginfo %>
+
+	<% }else if(toRender.password){ %>
+
+		<%- include settingpassword %>
+
+	<% }else if(toRender.header){ %>
+		<%- include settingheader %>
+
+	<% } %>
+
+	<script>
+	(function(){
+		var btns = document.querySelector('.setting-nav').querySelectorAll('a');
+
+		var query = window.location.search;
+
+		for(var i = 0; i<btns.length;i++){
+			console.log(btns[i].href.indexOf(query));
+			btns[i].className = '';
+			if(btns[i].href.indexOf(query)!==-1){
+				console.log(btns[i]);
+				btns[i].className = 'on';
+			}
+		}
+	})();
+	</script>
+</article>
+<%-include footer%>
+<%}else{%>
+	没有权限
+<%}%>

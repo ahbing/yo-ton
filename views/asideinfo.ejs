@@ -1,0 +1,19 @@
+	<aside class="infos">
+		<div class="teacher">
+			<p>教师信息</p>
+			<div>
+				<a href="/person/<%-teacher._id %>">
+					<img class="teacher-header" src="<%- teacher.header%>" alt="头像">
+				</a>
+				<div class="teacher-info">
+					<p class="name">
+						<a href="/person/<%-teacher._id %>">
+							<%- teacher.name%>
+						</a>
+					</p>
+					<p class="info"><%- teacher.intro %></p>
+				</div>
+			</div>
+		</div>
+		<%- include workinfo %>
+	</aside>

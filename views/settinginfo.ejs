@@ -1,0 +1,52 @@
+	<section class="setting-infos">
+		<h3>个人公开信息</h3>
+		<form action="/settingInfos/<%-person._id%>" method='POST' class='setting-form'>
+			<div class="setting-name">
+				<label for="setting-username">用户名</label>
+				<div>
+					<input id='setting-username' type="text" name="username" value='<%- person.name %>'>
+				</div>
+			</div>
+			<div class="setting-email">
+				<label for="setting-email">邮箱</label>
+				<div>
+					<input id='setting-email' type="text" name="email" value='<%- person.email %>'>
+					<% if(!person.active){%>
+						<span><a target="blank" class='setting-toactive' href="/settingActive/<%- person._id%>">现在去验证邮箱？</a></span>
+					<%}%>
+				</div>
+			</div>
+			<div class="setting-school">
+				<label for="setting-school">学校</label>
+				<div>
+					<input id='setting-school' type="text" name="school" value='<%- person.school %>'>
+				</div>
+			</div>
+
+			<div class="setting-intro">
+				<label for="setting-intro">简介</label>
+				<div>
+					<input id='setting-intro' type="text" name="intro" value='<%- person.intro %>'>
+				</div>
+			</div>
+			<div class="setting-address">
+				<label for="setting-address">地址</label>
+				<div>
+					<input id='setting-address' type="text" name="address" value='<%- person.address %>'>
+				</div>
+			</div>
+			<div class="setting-phone">
+				<label for="setting-phone">联系电话
+					<select name="isopen" value="<%- person.isOpen %>">
+						<option value="0">对我关注的人公开</option>
+						<option value="1">对任何人公开</option>
+						<option value="2">对任何人都不公开</option>
+					</select>
+				</label>
+				<div>
+					<input id='setting-phone' type="text" name="phone" value='<%- person.phone %>'>
+				</div>
+			</div>
+			<input class="setting-btn" type="submit" value="保存修改">
+		</form>
+	</section>

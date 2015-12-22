@@ -1,0 +1,216 @@
+<%- include header %>
+<article class="person-page">
+	<aside>
+		<div class="person-header">
+			<img src="<%- person.header%>" alt="头像">
+
+		</div>
+		<p class='person-name'>
+			<a href="/person/<%- person._id%>"><%- person.name%></a>
+		</p>
+		<p class="person-intro">
+			<%- person.intro %>
+		</p>
+		<p class="person-school">
+			<a href="#"><%- person.school %></a>
+		</p>
+		<p class="person-adress">
+			<%- person.address %>
+		</p>
+
+		<% if(user._id == person._id){ %>
+				<!-- 本人访问 -->
+				<a class="chat-width" href="/setting/<%- person._id%>?editinfo=true">设置个人信息</a>
+		<% }else{ %>
+			<!-- 访客 -->
+			<button class="chat-width">
+				和<span class="user-name"><%- person.name%></span>产生交流
+			</button>
+		<% } %>
+	</aside>
+	<div class="person-bg">
+		<% if(user._id == person._id){ %>
+		<form action="/editPersonBg/<%- person._id%>" method="POST"  enctype='multipart/form-data'>
+			<a class="person-change-bg" href="#">更换背景</a>
+			<a class="cancel-change-bg hide" href="#">放弃更换</a>
+			<input class='input-bg-btn hide' type="file" name="personBg" >
+			<input class='save-bg-btn hide' type="submit" value="保存修改">
+		</form>
+		<% } %>
+		<img src="<%- person.bgSrc %>" alt="背景图片">
+	</div>
+
+
+	<div class="person-body">
+		<header>
+			<ul>
+				<!-- user 是当前登录用户  person 是访问的用户 -->
+				<% if(user._id == person._id){ %>
+				<li><a class="person-my on" href="#">我的课程</a></li>
+				<li><a class="person-friend" href="#">我的关注</a></li>
+				<%}else{%>
+				<li><a class="on" href="#">课程</a></li>
+				<li><a class="" href="#">发现</a></li>
+				<%}%>
+			</ul>
+			<div class="edit-btn">
+				<% if(user._id == person._id){ %>
+					<!-- 本人访问 -->
+					<!-- <a class="edit-resume" href="#">编辑个人简历</a> -->
+				<% }else{ %>
+					<!-- 访客 -->
+					<% if(hasAdd){ %>
+					<!-- 已经添加关注 -->
+						<a class="remove-friends" href="/removeFrirend/<%- person._id%>">移除关注</a>
+					<% }else{ %>
+						<a class="add-friends" href="/addFrirend/<%- person._id%>">添加关注</a>
+					<% } %>
+				<% } %>
+			</div>
+		</header>
+		<% if(user._id == person._id){ %>
+			<%- include personindex %>
+			<%- include friends %>
+		<% }else{ %>
+			<!-- 访客 -->
+		<% } %>
+	</div>
+</article>
+<script>
+	window.onload = function(){
+		//页面加载完成去加载  person 中我的课程
+		var loadPersonBtn = document.querySelector('#loadPersonBtn');
+		loadPersonBtn.click();
+		var my = document.querySelector('.person-my');
+		var friend = document.querySelector('.person-friend');
+		var myBox = document.querySelector('.person-index');
+		var friendBox = document.querySelector('.person-friends');
+
+		var loadFriendBtn = document.querySelector('#loadFriendBtn');
+		// 正在学习 和 删除课程
+		var spanBtns = document.querySelector('.person-index-nav').querySelectorAll('a');
+
+		my.addEventListener('click',function(e){
+			e = e || window.e;
+			e.preventDefault();
+			this.className = 'person-my on';
+			friend.className = 'person-friend';
+			myBox.className = 'person-index';
+			friendBox.className = 'person-friends hide';
+			hideDelBtn();
+		},false);
+
+		friend.addEventListener('click',function(e){
+			e = e||window.e;
+			e.preventDefault();
+			this.className = 'person-friend on';
+			my.className = 'person-my';
+			myBox.className = 'person-index hide';
+			friendBox.className = 'person-friends';
+			loadFriendBtn.click();
+		},false);
+
+
+		for(var i = 0;i<spanBtns.length;i++){
+			spanBtns[i].addEventListener('click',function(e){
+				var e = e||window.e;
+				e.preventDefault();
+				var target = e.target;
+				for(var j = 0;j<spanBtns.length;j++){
+					spanBtns[j].className = '';
+				}
+				this.className = 'on';
+				console.log(target.id);
+				hideDelBtn();
+				if(target.id == 'delete-course' &&target.firstChild.nodeValue=='删除课程'){
+						showDelBtn();
+						target.innerText = '完成';
+						target.textContent = '完成';
+
+				}else if(target.id == 'delete-course'&&target.firstChild.nodeValue=='完成'){
+					target.innerText = '删除课程';
+					target.textContent = '删除课程';
+
+				}
+			},false);
+		}
+
+		document.addEventListener('click',function(e){
+			e = e || window.e;
+			e.stopPropagation();
+			//hideDelBtn();
+			console.log(e.target);
+		},false);
+
+
+		//更换背景
+		var changeBgBtn = document.querySelector('.person-change-bg');
+		var inputBgBtn = document.querySelector('.input-bg-btn');
+		var saveBgBtn = document.querySelector('.save-bg-btn');
+		var cancelBgBtn = document.querySelector('.cancel-change-bg');
+		var oImg = document.querySelector('.person-bg').querySelector('img');
+			var oldSrc = oImg.src;
+		changeBgBtn.addEventListener('click',function(e){
+			e = e ||window.e;
+			e.preventDefault();
+			inputBgBtn.click();
+		},false);
+
+		inputBgBtn.addEventListener('change',function(e){
+			e = e || window.e;
+			var file = this.files[0];
+			if (window.File && window.FileReader && window.FileList && window.Blob) {
+				handleFile(file);
+			} else {
+				alert('你的浏览器不支持FileAPI,无法预览上传的图片,我们建议你使用chrome等先进浏览器，让我们携手努力早日走进高速浏览器时代。');
+			}
+			saveBgBtn.className = 'save-bg-btn';
+			cancelBgBtn.className = 'cancel-change-bg';
+			changeBgBtn.innerText= '重新选择';
+			changeBgBtn.textContent= '重新选择';
+			;
+		},false);
+		cancelBgBtn.addEventListener('click',function(e){
+			oImg.src  = oldSrc;
+			saveBgBtn.className = 'save-bg-btn hide';
+			cancelBgBtn.className = 'cancel-change-bg hide';
+			changeBgBtn.innerText = '更换背景';
+			changeBgBtn.textContent= '更换背景';
+
+		},false);
+	}; //end window.onload
+
+
+	function handleFile(file){
+		if(!file.type.match('image.*')){
+			return alert('请上传图片文件');
+		}
+
+		var oImg = document.querySelector('.person-bg').querySelector('img');
+		var oldSrc = oImg.src;
+		var reader = new FileReader();
+
+		reader.onload = (function(oImg){
+			return function(e){
+				oImg.src = e.target.result;
+			}
+		})(oImg);
+		reader.readAsDataURL(file);
+	}
+
+	function showDelBtn(){
+		var allItems = document.querySelectorAll('.delete-learn-btn');
+		for(var k = 0; k<allItems.length;k++){
+			allItems[k].className ='delete-learn-btn';
+		}
+	}
+
+	function hideDelBtn(){
+		var allItems = document.querySelectorAll('.delete-learn-btn');
+		for(var k = 0; k<allItems.length;k++){
+			allItems[k].className ='delete-learn-btn hide';
+		}
+	}
+</script>
+<%- include footer %>
+

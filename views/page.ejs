@@ -1,0 +1,42 @@
+<!-- 分页 -->
+<div class="page-nav">
+		<a href="?p=<%= 1 %>">首页</a>
+		<% if(!isFirstPage){ %>
+			<a href="?p=<%= page-1 %>">上一页</a>
+		<% }else{%>
+			<a href="?p=1">上一页</a>
+		<%}%>
+		<% pageNumArr.forEach(function(item){%>
+			<a class="pageNum" href="?p=<%- item+1%>"><%- item+1 %></a>
+		<%})%>
+
+		<% if(!isLastPage){ %>
+		<a href="?p=<%= page+1 %>">下一页</a>
+		<% }else{%>
+			<a href="?p=<%= lastPage %>">下一页</a>
+		<%}%>
+		<a href="?p=<%= lastPage %>">尾页</a>
+</div>
+<script>
+	(function(){
+		var url = window.location;
+		var pageNum = url.search.split('=')[1];
+
+		var pages = document.querySelectorAll('.pageNum');
+		for(var i = 0, len = pages.length;i<len;i++){
+			// for(var j = 0;j<pages.length;j++){
+			// 	pages[j].className = 'pageNum';
+			// }
+			if(!pageNum){
+				pages[0].className='pageNum on';
+			}
+
+			var pageText = pages[i].textContent || pages[i].innerText;
+			pageText = parseInt(pageText);
+			if(pageText==pageNum){
+				pages[pageText-1].className = 'pageNum on';
+			}
+
+		}
+	})();
+</script>

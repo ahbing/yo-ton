@@ -1,0 +1,74 @@
+<%- include header %>
+<%- include login %>
+<div class="course-nav-box clearfix">
+	<h2>全部课程</h2>
+	<div class="course-nav-row clearfix">
+		<div>方向：</div>
+		<ul class="direction-list">
+			<li><a class="dire-a" data-name="all" href="/courses">全部</a></li>
+			<% list.forEach(function(item){%>
+				<li><a class="dire-a" data-name="<%- item.dire %>" href="?dire=<%- item.dire %>"><%- item.dire %></a></li>
+			<%})%>
+		</ul>
+	</div>
+	<div class="course-nav-row clearfix">
+		<div>科目：</div>
+		<ul class="diffculty-list">
+			<li><a data-name="all" class='diff-a' href="/courses">全部</a></li>
+			<% child.forEach(function(item){%>
+				<li><a class="diff-a" data-name="<%- item%>" href="?diff=<%- item %>"><%- item%></a></li>
+			<%})%>
+		</ul>
+	</div>
+</div>
+
+<div class="courses-list">
+	<ul class='clearfix'>
+		<% courses.forEach(function(item){%>
+		<li class="course">
+			<a href="/course/<%= item._id %>">
+				<div class="course-img">
+					<img src="<%= item.courseImg %>" alt="课程图片">
+				</div>
+				<div class="course-intro">
+					<p class="course-title">
+						<%= item.title %>
+					</p>
+					<span><%= item.teacher.name %></span>
+					<span><%= item.studentCount%>人在学习</span>
+				</div>
+			</a>
+		</li>
+		<%})%>
+	</ul>
+</div>
+
+<%- include page%>
+<script>
+	(function(){
+		var url =  window.location.search;
+		var val = decodeURI(url.split('=')[1]);
+		var direAs = document.querySelectorAll('.dire-a');
+		var diffAs = document.querySelectorAll('.diff-a');
+		if(url.indexOf('dire')!==-1){
+			//方向
+			for(var i = 0;i<direAs.length;i++){
+				if(direAs[i].getAttribute('data-name') == val){
+					direAs[i].className = 'dire-a on';
+					diffAs[0].className = 'dire-a on';
+				}
+			}
+		}else if(url.indexOf('diff')!==-1){
+			//科目
+			for(var i = 0;i<diffAs.length;i++){
+				if(diffAs[i].getAttribute('data-name') == val){
+					diffAs[i].className = 'dire-a on';
+					direAs[0].className = 'dire-a on';
+				}
+			}
+		}else{
+			diffAs[0].className = direAs[0].className = 'dire-a on';
+		}
+	})();
+</script>
+<%- include footer%>

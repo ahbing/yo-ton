@@ -1,0 +1,19 @@
+
+<% if(login&&root==1){ %>
+<%- include header2 %>
+<div class="admin-index">
+	<ul>
+		<li>
+			<a href="/admin/upload">新课程上传</a>
+		</li>
+		<li>
+			<a href="/admin/courseGuide">课程类型(方向，科目添加)</a>
+		</li>
+		<li>
+			<a href="/admin/courseEditList">已有课程列表</a>
+		</li>
+	</ul>
+</div>
+<%- include footer%>
+<%}%>
+

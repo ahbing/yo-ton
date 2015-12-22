@@ -1,0 +1,172 @@
+<%- include courseHeader %>
+<article class="main-course">
+	<ul class="bread-title">
+		<li><a href="#">首页</a></li>
+		<li><a class="bread-item" href="/courses?dire=<%- course.direction%>"><%- course.direction%></a></li>
+		<li><a class="bread-item" href="/courses?diff=<%- course.difficulty%>"><%- course.difficulty%></a></li>
+	</ul>
+	<h1 class="course-name"><%- course.title%></h1>
+	<div class="video-box">
+		<video id="really-cool-video"  class="video video-js vjs-default-skin" controls
+		 preload="auto" autoplay="true"
+		 data-setup='{}'>
+		  <p class="vjs-no-js">
+		    你的浏览器不支持HTML5，请使用chrome|firefox等高级浏览器，让我们携手努力早日走进高速浏览器时代。
+		  </p>
+		</video>
+	</div>
+	<aside>
+		<p>课程章节</p>
+		<ul class="course-section-list">
+			<% course.courseSections.forEach(function(item,index){ %>
+				<%if(course.curSection == index){%>
+					<li><a title="<%= item.src%>" class="on" href="#"><%= item.title%></a></li>
+				<%}else{%>
+					<li><a title="<%= item.src%>" href="#"><%= item.title%></a></li>
+				<%}%>
+		  <% })%>
+		</ul>
+	</aside>
+</article>
+
+<article class="video-chat">
+	<ul>
+
+			<li><a id="classmatesBtn" data-id="<%- course._id%>" class='on'  href="#">同学</a></li>
+			<li><a id="commentBtn" data-id="<%- course._id%>" href="?comment=true">评论</a></li>
+	</ul>
+	<%- include schoolmates %>
+	<%- include comment %>
+	<%- include asideinfo %>
+</article>
+
+<script>
+	//页面加载完之后 ajax加载 同学 数据
+	window.onload = function(){
+		var loadBtn1 = document.querySelector('#loadBtn1');
+		loadBtn1.click();  //页面加载完成就加载同学的数据
+
+		var loadBtn2 = document.querySelector('#loadBtn2');
+		var commentBtn = document.querySelector('#commentBtn');
+		//点击评论 如果是第一次点击就加载第一轮的评论数据  否则return掉
+		commentBtn.addEventListener('click',function(){
+			var p = loadBtn2.getAttribute('data-p');
+			if(p<=1){
+				loadBtn2.click();
+			}else{
+				return;
+			}
+		},false);
+
+		//留言成功url 跳转
+		var url = window.location.search;
+		if(url ==='?comment=true'){
+			commentBtn.className = 'on';
+			classmatesBtn.className='';
+			commentBox.className = 'comment-box show';
+			classmatesBox.className = 'classmates-box';
+			loadBtn2.click();
+		}
+		// 同学和评论 切换
+		changeTab();
+		//课程章节选择播放
+		changeCourse()
+	};
+
+
+function changeTab(){
+	var commentBtn = document.querySelector('#commentBtn'),
+			classmatesBtn = document.querySelector('#classmatesBtn'),
+			commentBox = document.querySelector('#commentBox'),
+			classmatesBox = document.querySelector('#classmatesBox');
+
+	commentBtn.addEventListener('click',function(e){
+		e.preventDefault();
+		this.className = 'on';
+		classmatesBtn.className='';
+		commentBox.className = 'comment-box show';
+		classmatesBox.className = 'classmates-box';
+	},false);
+	classmatesBtn.addEventListener('click',function(e){
+		e.preventDefault();
+		this.className = 'on';
+		commentBtn.className='';
+		commentBox.className = 'comment-box';
+		classmatesBox.className = 'classmates-box show';
+	},false);
+
+}
+// 单击切换资源
+function changeCourse(){
+	var video = document.querySelector('#really-cool-video_html5_api');
+	var courseSection = document.querySelector('.course-section-list')
+	var courseList = courseSection.querySelectorAll('a');
+	var curItem = courseSection.querySelector('a.on');
+	console.log(curItem);
+
+	var curSrc = curItem.getAttribute('title');
+	console.log(curSrc.split(',')[0]);
+	console.log(video);
+
+	loadSrc(video,curSrc);
+	//sigleSrc(video,curSrc);
+	for(var i = 0,len = courseList.length;i<len;i++){
+		courseList[i].addEventListener('click',changeSrc,false);
+	}
+	function changeSrc(e){
+		e = e || window.e;
+		e.preventDefault();
+		for(var j = 0,len = courseList.length;j<len;j++){
+			courseList[j].className = '';
+		}
+		curSrc = e.target.getAttribute('title');
+		console.log(curSrc);
+		e.target.className = 'on';
+		sigleSrc(video,curSrc);
+		// loadSrc(video,curSrc);
+	}
+}
+
+// 读title的src字符串处理  加载
+function sigleSrc(obj,curSrc){
+	var sources = obj.querySelectorAll('source');
+	console.log(sources);
+	if(curSrc.indexOf(',')!==-1){
+		var srcArr = curSrc.split(',');
+		console.log(srcArr);
+		sources[0].src= srcArr[0];
+		sources[0].type = 'video/'+srcArr[0].split('.')[1];
+	}else{
+		console.log(curSrc);
+		sources[0].src= curSrc;
+		obj.src = curSrc;
+		sources[0].type = 'video/'+curSrc.split('.')[1];
+	}
+	console.log(obj);
+}
+
+// 读title的src字符串处理  加载
+function loadSrc(obj,curSrc){
+	if(curSrc.indexOf(',')!==-1){
+		var srcArr = curSrc.split(',');
+		console.log(srcArr);
+		for(var i = 0; i<srcArr.length;i++){
+			var source = document.createElement('source');
+			source.src = srcArr[i];
+			var type = 'video/'+srcArr[i].split('.')[1];
+			source.type = type;
+		  obj.appendChild(source);
+
+		}
+	}else{
+		var source = document.createElement('source');
+		source.src = curSrc;
+		var type = 'video/'+curSrc.split('.')[1];
+		source.type = type;
+		console.log(obj);
+		obj.appendChild(source);
+	}
+}
+</script>
+
+<%- include footer %>

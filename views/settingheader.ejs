@@ -1,0 +1,13 @@
+<section class="setting-header">
+	<h3>修改头像</h3>
+	<form action="/settingheader/<%- person._id %>" method='POST' class='setting-form' enctype='multipart/form-data'>
+		<div class="setting-header">
+			<img src="<%- person.header %>" alt="旧头像">
+		</div>
+		<a class="setting-upload-header-btn" href="#">
+			<label for="upluad-header">上传新头像</label>
+			<input id="upluad-header" type="file" name='newheader'>
+		</a>
+		<input class="setting-btn" type="submit" value="保存修改">
+	</form>
+</section>

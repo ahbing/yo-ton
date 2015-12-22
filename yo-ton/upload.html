@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>邮筒学院</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+	<a class='logo' href="#">邮筒学院</a>
+	<ul>
+		<li><a href="#">课程</a></li>
+		<li><a href="#">职场</a></li>
+	</ul>
+	<ul>
+		<li><a class="login-btn" href="#">登录</a></li>
+		<li><a class="hide" href="#">念树于心</a></li>
+	</ul>
+</nav> <!-- end头部导航 -->
+<article class="upload-page">
+	<div class="upload-box">
+		<h3>邮筒网课程上传系统</h3>
+		<form action="/" method='POST' class='upload-form'>
+			<div class="upload-title">
+				<label for="upload-title">课程标题</label>
+				<div>
+					<input id='upload-title' type="text" name="title" value=''>
+				</div>
+			</div>
+			<div class="upload-img">
+				<label for="upload-img">课程图片</label>
+				<div>
+					<input id='upload-img' type="file" name="img" value='上传背景课程图片'>
+				</div>
+			</div>
+			<div class="upload-teacher">
+				<label for="upload-teacher">教师姓名</label>
+				<div>
+					<input id='upload-teacher' type="text" name="teacher" value=''>
+				</div>
+				<label for="upload-teacherID">教师Id</label>
+				<div>
+					<input id='upload-teacherId' type="text" name="teacherId" value=''>
+				</div>
+				<label for="upload-teacherIntro">教师简介</label>
+				<div>
+					<textarea maxlength="20" placeholder="简介请不超过140个字" name="teacherIntro" id="upload-teacherIntro" cols="30" rows="10"></textarea>
+				</div>
+			</div>
+
+			<div class="upload-direction">
+				<label for="upload-direction">课程方向</label>
+				<div>
+					<select id='upload-direction' name="courseDirection">
+						<option value="0">会计</option>
+						<option value="1">银行</option>
+						<option value="2">证券</option>
+					</select>
+				</div>
+			</div>
+			<div class="upload-difficulty">
+				<label for="upload-difficulty">课程方向</label>
+				<div>
+					<select id='upload-difficulty' name="courseDifficulty">
+						<option value="0">初级</option>
+						<option value="1">中级</option>
+						<option value="2">高级</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="upload-video">
+				<label>课程章节</label>
+				<div class="courseSection">
+					<input type="text" name="courseSectionsName" value="">
+					<input type="file" name="courseVideo[]">
+					<span class="del-btn">删除</span>
+				</div>
+				<div id="addCourseSection">添加上传</div>
+			</div>
+
+
+			<input class="upload-btn" type="submit" value="上传课程">
+
+		</form>
+	</div>
+</article>
+
+<script>
+	(function(){
+		var addBtn = document.querySelector('#addCourseSection');
+		var addBox = document.querySelector('.upload-video');
+		addBtn.addEventListener('click',addUpload,false);
+
+		function addUpload(e){
+			var text = document.createElement('input'),
+					file = document.createElement('input'),
+					span = document.createElement('span');
+					div = document.createElement('div');
+			text.type = 'text';
+			text.name = 'courseSectionsName';
+			text.value = '';
+
+			file.type = 'file';
+			file.name = 'courseVideo[]';
+
+			span.textContent = '删除';
+			span.className = 'del-btn';
+			div.className = 'courseSection';
+			div.appendChild(text);
+			div.appendChild(document.createTextNode('  '));
+			div.appendChild(file);
+			div.appendChild(document.createTextNode('  ')
+			div.appendChild(span);
+			addBox.insertBefore(div,addBtn);
+			var allDelBtn = document.querySelectorAll('.del-btn');
+
+			for(var i = 0,len = allDelBtn.length;i<len;i++){
+				allDelBtn[i].addEventListener('click',removeUpload,false);
+			}
+			function removeUpload(e){
+				// console.log(e.target.parentNode);
+				e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+			}
+		}
+
+
+	})();
+</script>
+
+<footer>
+	<ul>
+		<li><a href="#">关于我们</a></li>
+		<li><a href="#">商务合作</a></li>
+		<li><a href="#">意见反馈</a></li>
+		<li><a href="#">加入我们</a></li>
+	</ul>
+
+	<p>Copyright © 2015 yo-ton.com All Rights Reserved</p>
+</footer>
+<script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<%- include header2 %>
+
+
+<%if(login&&root==1){%>
+<article class="upload-page">
+	<div class="upload-box">
+
+		<h3>邮筒网课程上传系统</h3>
+		<form action="/admin/editCourseInfo/<%-course._id%>" method='POST' class='upload-form' enctype='multipart/form-data' multiple>
+			<div class="upload-title">
+				<label for="upload-title">课程标题<a class="admin-edit-delete-course" href="/admin/delete/<%-course._id%>">删除课程？</a></label>
+				<div>
+					<input id='upload-title' type="text" name="title" value='<%- course.title%>'>
+				</div>
+			</div>
+			<div class="upload-img">
+				<label for="upload-img">课程图片</label>
+				<div>
+					<input id='upload-img' type="hidden" name="oldImg" value='<%- course.courseImg%>'>
+					<img class="edit-course-img" src="<%- course.courseImg%>" alt="原有图片">
+					<button class="edit-course-img-btn">修改图片</button>
+				</div>
+			</div>
+			<div class="upload-teacher">
+				<label for="upload-teacher">教师姓名</label>
+				<div>
+					<input id='upload-teacher' type="text" name="teacherName" value="<%-course.teacher.name%>">
+				</div>
+				<label for="upload-teacherId">教师Id</label>
+				<div>
+					<input id='upload-teacherId' type="text" name="teacherId" value='<%-course.teacher.id%>'>
+				</div>
+				<label for="upload-teacherIntro">教师简介</label>
+				<div>
+					<textarea maxlength="140" placeholder="简介请不超过140个字" name="teacherIntro" id="upload-teacherIntro" cols="30" rows="10"><%-course.teacher.intro%></textarea>
+				</div>
+			</div>
+
+			<div class="upload-direction">
+				<label for="upload-direction">课程方向</label>
+				<div>
+					<select id='upload-direction' name="courseDirection" value="">
+						<% list.forEach(function(item){%>
+
+							<option value="<%- item.dire%>"><%- item.dire%></option>
+						<%})%>
+					</select>
+					<!-- <input id='upload-direction' type="text" name="courseDirection"> -->
+				</div>
+			</div>
+			<div class="upload-difficulty">
+				<label for="upload-difficulty">课程科目(子)</label>
+				<div>
+					<select id='upload-difficulty' name="courseDifficulty" value="">
+						<% child.forEach(function(item){%>
+
+							<option value="<%- item%>"><%- item%></option>
+						<%})%>
+					</select>
+					<!-- <input id='upload-difficulty' type="text" name="courseDifficulty"> -->
+				</div>
+			</div>
+			<input class="upload-btn" type="submit" value="保存课程基本信息">
+		</form>
+	</div>
+
+</article>
+<script>
+	(function(){
+		var oBtn = document.querySelector('.edit-course-img-btn');
+		oBtn.addEventListener('click',getInput,false);
+
+		function getInput(e){
+			e = e||window.e;
+			e.preventDefault();
+
+			var target = e.target,
+					parent = target.parentNode;
+			var oInput = document.createElement('input');
+			oInput.id = 'upload-img';
+			oInput.type = 'file';
+			oInput.name = "img";
+			parent.removeChild(target.previousElementSibling);
+			parent.insertBefore(oInput,target);
+		}
+	})();
+</script>
+<% }else{ %>
+<article class="upload-page">
+	<div>没有权限！</div>
+</article>
+<% } %>
+<%- include footer %>

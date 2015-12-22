@@ -1,0 +1,89 @@
+<%- include header2 %>
+
+<%if(login&&root==1){%>
+<article class="upload-page">
+	<div class="upload-box">
+		<h3>邮筒网课程上传系统</h3>
+		<form action="/admin/uploadVideo/<%- course._id %>" method='POST' class='upload-form' enctype='multipart/form-data' multiple>
+			<div class="upload-video">
+				<label>存在的课程章节</label>
+					<div class="courseSection">
+						<ul class="clearfix">
+							<% course.courseSections.forEach(function(item){%>
+							<li class="hasExistCourse clearfix" data-src="<%- item.src%>"><%- item.title%>
+						<!-- <input type="file" name="courseVideo" multiple> -->
+						<span class="del-btn">删除</span></li><%})%>
+						</ul>
+					</div>
+
+				<label>新添加课程章节</label>
+				<div class="courseSection">
+					<input type="text" name="courseSectionsName" value="" multiple="multiple">
+					<input type="file" name="courseVideo"  multiple="multiple">
+					<span class="del-btn">删除</span>
+				</div>
+				<div id="addCourseSection">添加上传</div>
+			</div>
+			<input class="upload-btn" type="submit" value="上传课程视频资源">
+		</form>
+	</div>
+</article>
+
+<script>
+	(function(){
+		var addBtn = document.querySelector('#addCourseSection');
+		var addBox = document.querySelector('.upload-video');
+		addBtn.addEventListener('click',addUpload,false);
+
+		function addUpload(e){
+			var text = document.createElement('input'),
+					file = document.createElement('input'),
+					span = document.createElement('span');
+					div = document.createElement('div');
+			text.type = 'text';
+			text.name = 'courseSectionsName';
+			text.value = '';
+			text.multiple = 'multiple';
+
+			file.type = 'file';
+			file.name = 'courseVideo';
+			file.multiple = 'multiple';
+
+			span.textContent = '删除';
+			span.className = 'del-btn';
+			div.className = 'courseSection';
+			div.appendChild(text);
+			div.appendChild(document.createTextNode('  '));
+			div.appendChild(file);
+			div.appendChild(document.createTextNode('  '));
+			div.appendChild(span);
+			addBox.insertBefore(div,addBtn);
+			var allDelBtn = document.querySelectorAll('.del-btn');
+
+			for(var i = 0,len = allDelBtn.length;i<len;i++){
+				allDelBtn[i].addEventListener('click',removeUpload,false);
+			}
+			function removeUpload(e){
+				// console.log(e.target.parentNode);
+				e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+			}
+		}
+		var allDelBtn = document.querySelectorAll('.del-btn');
+
+			for(var i = 0,len = allDelBtn.length;i<len;i++){
+				allDelBtn[i].addEventListener('click',removeUpload,false);
+			}
+			function removeUpload(e){
+				// console.log(e.target.parentNode);
+				e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+			}
+
+	})();
+</script>
+
+<% }else{ %>
+<article class="upload-page">
+	<div>没有权限！</div>
+</article>
+<% } %>
+<%- include footer %>

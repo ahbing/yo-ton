@@ -1,0 +1,14 @@
+	<section id="commentBox" class="comment-box">
+		<div>
+			<img class='user-header' src="<%- user.header %>" alt="头像">
+			<form action="/comment/<%- course._id%>" method="POST" >
+				<textarea class='comment-input' name="comment-content" placeholder="说你想说的"></textarea>
+				<input class="submit-btn" type="submit" value='发表评论'>
+			</form>
+		</div>
+		<ul id="commentsList" class="comment-list">
+
+		</ul>
+		<div data-id="<%- course._id%>" data-p="1" id="loadBtn2" class="loadBtn">点击继续加载</div>
+	</section>
+

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>邮筒学院</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<article class="top-bg hide">
+	<div class="login-box ">
+		<div class='login-title clearfix'>
+			<span>登录</span>
+			<span class="close" title='关闭'>×</span>
+		</div>
+
+		<form class="login-form" action="#" method="POST">
+			<input type="email" name="email" placeholder="邮箱" required><br/>
+			<input type="password" name="password" placeholder="密码" required><br/>
+			<p class="error-info">错误信息</p>
+			<input type="submit" name="password" value='登录邮筒'>
+		</form>
+		<div class="login-footer">
+			<span>还没有帐号？<a  class='to-reg' href="#">立即注册</a></span>
+			<span class="forget-psw"><a  href="#">忘记密码?</a></span>
+		</div>
+	</div>
+	<div class="reg-box hide">
+		<div class='reg-title clearfix'>
+			<span>注册</span>
+			<span class="close" title='关闭'>×</span>
+		</div>
+
+		<form class="reg-form" action="#" method="POST">
+			<input type="email" name="email" placeholder="邮箱" required><br/>
+			<input type="password" name="password" placeholder="密码" required><br/>
+			<input type="password" name="password2" placeholder="确认密码" required><br/>
+<!-- 			<input type="text" name="school" placeholder="学校" required> -->
+			<div class="captcha-box">
+				<input class="captcha" placeholder="输入验证码" type="text" name="captcha">
+				<img class='captcha-img' src="
+				images/capcha.png" alt="">
+			</div>
+			<p class="error-info">错误信息</p>
+			<input type="submit" name="password" value='注册邮筒'>
+		</form>
+		<div class="reg-footer">
+			<span>已经有帐号？<a class='to-login' href="#">立即登录</a></span>
+		</div>
+	</div>
+</article> <!-- end登录注册 -->
+
+<nav>
+	<a class='logo' href="#">邮筒学院</a>
+	<ul>
+		<li><a href="#">课程</a></li>
+		<li><a href="#">职场</a></li>
+	</ul>
+	<ul>
+		<li><a class="login-btn" href="#">登录</a></li>
+		<li><a class="hide" href="#">念树于心</a></li>
+	</ul>
+</nav> <!-- end头部导航 -->
+
+<article class="setting-page clearfix">
+	<aside class="setting-nav">
+		<h3>信息设置</h3>
+		<ul>
+			<li><a class="on" href="">修改信息</a></li>
+			<li><a href="">修改密码</a></li>
+			<li><a href="">修改头像</a></li>
+		</ul>
+	</aside>
+	<section class="setting-infos">
+		<h3>个人公开信息</h3>
+		<form action="/" method='POST' class='setting-form'>
+			<div class="setting-name">
+				<label for="setting-username">用户名</label>
+				<div>
+					<input id='setting-username' type="text" name="username" value='念树于心'>
+				</div>
+			</div>
+			<div class="setting-email">
+				<label for="setting-email">邮箱</label>
+				<div>
+					<input id='setting-email' type="text" name="email" value='hbb@betahouse.us'>
+				</div>
+			</div>
+			<div class="setting-school">
+				<label for="setting-school">学校</label>
+				<div>
+					<input id='setting-school' type="text" name="school" value='杭州电子科技大学'>
+				</div>
+			</div>
+
+			<div class="setting-company">
+				<label for="setting-company">公司</label>
+				<div>
+					<input id='setting-company' type="text" name="company" value='邮筒教育科技'>
+				</div>
+			</div>
+			<div class="setting-address">
+				<label for="setting-address">地址</label>
+				<div>
+					<input id='setting-address' type="text" name="address" value='杭州'>
+				</div>
+			</div>
+			<div class="setting-phone">
+				<label for="setting-phone">联系电话
+					<select name="isopen">
+						<option value="0">对我关注的人公开</option>
+						<option value="1">对任何人公开</option>
+						<option value="2">对任何人都不公开</option>
+					</select>
+				</label>
+				<div>
+					<input id='setting-phone' type="text" name="phone" value='13750867130'>
+				</div>
+			</div>
+			<input class="setting-btn" type="submit" value="保存修改">
+		</form>
+
+	</section>
+	<section class="setting-password">
+		<h3>帐号密码修改</h3>
+		<form action="/" method='POST' class='setting-form'>
+			<div class="setting-password">
+				<label for="setting-oldpsw">旧密码</label>
+				<div>
+					<input id='setting-oldpsw' type="text" name="oldpsw" value=''>
+				</div>
+			</div>
+			<div class="setting-password">
+				<label for="setting-newpsw">新密码</label>
+				<div>
+					<input id='setting-newpsw' type="text" name="newpsw" value=''>
+				</div>
+			</div>
+			<div class="setting-password">
+				<label for="setting-newpsw">确认新密码</label>
+				<div>
+					<input id='setting-newpsw' type="text" name="newpsw" value=''>
+				</div>
+			</div>
+			<input class="setting-btn" type="submit" value="保存修改">
+		</form>
+
+	</section>
+
+
+	<section class="setting-header">
+		<h3>修改头像</h3>
+		<form action="/" method='POST' class='setting-form'>
+			<div class="setting-header">
+				<img src="images/header.jpg" alt="旧头像">
+			</div>
+			<a class="setting-upload-header-btn" href="#">
+				<label for="upluad-header">上传新头像</label>
+				<input id="upluad-header" type="file" name='newheader'>
+			</a>
+			<input class="setting-btn" type="submit" value="保存修改">
+		</form>
+	</section>
+</article>
+
+<footer>
+	<ul>
+		<li><a href="#">关于我们</a></li>
+		<li><a href="#">商务合作</a></li>
+		<li><a href="#">意见反馈</a></li>
+		<li><a href="#">加入我们</a></li>
+	</ul>
+
+	<p>Copyright © 2015 yo-ton.com All Rights Reserved</p>
+</footer>
+<script src="js/index.js"></script>
+</body>
+</html>

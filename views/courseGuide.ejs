@@ -1,0 +1,78 @@
+<%- include header2 %>
+
+<%if(login&&root==1){%>
+<article class="upload-page">
+
+	<div class="course-nav-row clearfix">
+		<div>方向：</div>
+		<ul class="direction-list">
+			<li><a class="dire-a" data-name="all" href="/admin/courseGuide">全部</a></li>
+			<% list.forEach(function(item){%>
+				<li><a class="dire-a" data-name="<%- item.dire %>" href="?dire=<%- item.dire %>"><%- item.dire %></a></li>
+			<%})%>
+		</ul>
+	</div>
+	<div class="course-nav-row clearfix">
+		<div>科目：</div>
+		<ul class="diffculty-list">
+			<li><a data-name="all" class='diff-a' href="/admin/courseGuide">全部</a></li>
+			<% child.forEach(function(item){%>
+				<li><a class="diff-a" data-name="<%- item%>" href="?diff=<%- item %>"><%- item%></a></li>
+			<%})%>
+		</ul>
+	</div>
+
+
+
+	<div class="upload-box">
+		<h3>邮筒网课程上传系统（添加课程类型）</h3>
+		<form action="/admin/courseGuide" method='POST' class='upload-form'>
+			<div class="upload-title">
+				<label for="upload-title">课程方向</label>
+				<div>
+					<input id='upload-title' type="text" name="title" value=''>
+				</div>
+			</div>
+			<div class="upload-name">
+				<label for="upload-name">课程科目</label>
+				<div>
+					<input id='upload-name' type="text" name="name" value=''>
+				</div>
+			</div>
+			<input class="upload-btn" type="submit" value="添加课程类型">
+		</form>
+	</div>
+</article>
+<script>
+	(function(){
+		var url =  window.location.search;
+		var val = decodeURI(url.split('=')[1]);
+		var direAs = document.querySelectorAll('.dire-a');
+		var diffAs = document.querySelectorAll('.diff-a');
+		if(url.indexOf('dire')!==-1){
+			//方向
+			for(var i = 0;i<direAs.length;i++){
+				if(direAs[i].getAttribute('data-name') == val){
+					direAs[i].className = 'dire-a on';
+					diffAs[0].className = 'dire-a on';
+				}
+			}
+		}else if(url.indexOf('diff')!==-1){
+			//科目
+			for(var i = 0;i<diffAs.length;i++){
+				if(diffAs[i].getAttribute('data-name') == val){
+					diffAs[i].className = 'dire-a on';
+					direAs[0].className = 'dire-a on';
+				}
+			}
+		}else{
+			diffAs[0].className = direAs[0].className = 'dire-a on';
+		}
+	})();
+</script>
+<% }else{ %>
+<article class="upload-page">
+	<div>没有权限！</div>
+</article>
+<% } %>
+<%- include footer %>

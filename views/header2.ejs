@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>邮筒学院</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<nav>
+	<a class='logo' href="/admin/">邮筒学院后台</a>
+	<ul>
+		<!-- <li><a href="#">课程</a></li>
+		<li><a href="#">职场</a></li> -->
+	</ul>
+	<ul>
+		<% if(login){%>
+			<li><a href="javascript:0;"><%= user.name%></a>
+				<div class="nav-guider">
+				<ul>
+					<li><a href="/person/<%= user._id%>">我的主页</a></li>
+					<li><a href="/setting/<%= user._id%>?editinfo=true">信息设置</a></li>
+					<li><a href="/logout">登出</a></li>
+				</ul>
+			</div>
+			</li>
+		<%}else{%>
+			<li><a class="login-btn" href="#">登录</a></li>
+		<%}%>
+
+
+	</ul>
+</nav> <!-- end头部导航 -->
+
+<% if(error){ %>
+	<div class="flash-info"><%= error %></div>
+<%}%>
+
+<% if(success){ %>
+	<div class="flash-info"><%= success %></div>
+<%}%>

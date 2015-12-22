@@ -1,0 +1,103 @@
+<article class="top-bg hide">
+  <div class="login-box ">
+    <div class='login-title clearfix'>
+      <span>登录</span>
+      <span class="close" title='关闭'>×</span>
+    </div>
+
+    <form class="login-form" action="/login" method="POST">
+      <input type="email" name="email" placeholder="邮箱" required><br/>
+      <input type="password" name="password" placeholder="密码" required><br/>
+      <p class="error-info">错误信息</p>
+      <input type="submit" name="loginBtn" value='登录邮筒'>
+    </form>
+    <div class="login-footer">
+      <span>还没有帐号？<a  class='to-reg' href="#">立即注册</a></span>
+      <span class="forget-psw"><a  href="#">忘记密码?</a></span>
+    </div>
+  </div>
+  <div class="reg-box hide">
+    <div class='reg-title clearfix'>
+      <span>注册</span>
+      <span class="close" title='关闭'>×</span>
+    </div>
+
+    <form class="reg-form" action="/reg" method="POST">
+      <input type="email" name="email" placeholder="邮箱" required><br/>
+      <input type="password" name="password" placeholder="密码" required><br/>
+      <input type="password" name="password2" placeholder="确认密码" required><br/>
+<!--      <input type="text" name="school" placeholder="学校" required> -->
+      <div class="captcha-box">
+        <input class="captcha" placeholder="输入验证码" type="text" name="captcha">
+        <img class='captcha-img' src="
+        images/capcha.png" alt="">
+      </div>
+      <p class="error-info">错误信息</p>
+      <input type="submit" name="regBtn" value='注册邮筒'>
+    </form>
+    <div class="reg-footer">
+      <span>已经有帐号？<a class='to-login' href="#">立即登录</a></span>
+    </div>
+  </div>
+</article> <!-- end登录注册 -->
+
+<script>
+function handleLogin(){
+  var loginBtn = document.querySelector('.login-btn');
+  var topBg = document.querySelector('.top-bg');
+  var closeBtn = topBg.querySelectorAll('.close');
+  var regBox = topBg.querySelector('.reg-box');
+  var loginBox = topBg.querySelector('.login-box');
+  var toLogin = regBox.querySelector('.to-login');
+  var toReg = loginBox.querySelector('.to-reg');
+  var inputs = topBg.querySelectorAll('input');
+  if(loginBtn){
+    loginBtn.addEventListener('click',function(e){
+      e.preventDefault();
+      topBg.className = 'top-bg';
+      regBox.className = 'reg-box hide';
+      loginBox.className = 'login-box';
+    },false);
+
+  }
+
+
+  for(var i = 0;i<closeBtn.length;i++){
+    closeBtn[i].addEventListener('click',function(e){
+      topBg.className = 'top-bg hide';
+    },false);
+  }
+
+  toReg.addEventListener('click',function(e){
+    e.preventDefault();
+    regBox.className = 'reg-box';
+    loginBox.className = 'login-box hide';
+  },false);
+
+  toLogin.addEventListener('click',function(e){
+    e.preventDefault();
+    regBox.className = 'reg-box hide';
+    loginBox.className = 'login-box ';
+  },false);
+
+  for(var i =0; i<inputs.length;i++){
+    inputs[i].addEventListener('focus',function(e){
+      for(var j = 0;j<inputs.length;j++){
+        inputs[j].style.cssText ='';
+      }
+      if(this.type == 'submit'){
+        this.style.cssText = '';
+      }else{
+        console.log(e.target);
+
+        this.style.cssText = 'box-shadow:0px 0px 2px 2px rgba(30,135,74,.6);';
+      }
+    },false);
+  }
+}
+
+window.onload = function(){
+  handleLogin();
+}
+
+</script>

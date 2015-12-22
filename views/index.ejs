@@ -1,0 +1,59 @@
+<%- include header %>
+<%- include login %>
+<div class="big-intro">
+	<div class="text-intro">
+		<h2>HELLO</h2>
+		<p>欢迎来到邮筒学院</p>
+		<p>学习的道路上，你将永不独行。</p>
+		<p class="join-btn">
+			<% if(login){ %>
+				<a href="/courses">立即加入</a>
+			<%}else{%>
+				<a class="click-login-btn" href="#">立即加入</a>
+			<%}%>
+		</p>
+	</div>
+</div>
+
+<div class="courses">
+	<h1>课程</h1>
+
+	<ul class='clearfix'>
+		<% courses.forEach(function(course){ %>
+		<li class="course">
+			<a  href="/course/<%= course._id%>">
+				<div class="course-img">
+					<img src="<%- course.courseImg %>" alt="课程图片">
+				</div>
+				<div class="course-intro">
+					<p class="course-title">
+						<%- course.title %>
+					</p>
+					<span><%- course.teacher.name %></span>
+					<span><%- course.studentCount %>人在学习</span>
+				</div>
+			</a>
+		</li>
+		<% }) %>
+
+
+	</ul>
+	<p><a href="/courses">所有课程</a></p>
+</div>
+<script>
+	(function(){
+		var joinBtn = document.querySelector('.click-login-btn');
+		var loginBtn = document.querySelector('.login-btn');
+		if(joinBtn){
+			joinBtn.addEventListener('click',clickLoginBtn,false);
+		}
+
+
+		function clickLoginBtn(e){
+			e = e || window.e;
+			e.preventDefault();
+			loginBtn.click();
+		}
+	})();
+</script>
+<%- include footer%>
